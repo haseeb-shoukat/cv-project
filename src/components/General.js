@@ -69,6 +69,7 @@ export default class General extends React.Component {
           placeholder="021-34567891"
           id="phone"
           type="tel"
+          pattern="[+]{1}[0-9]{11,14}"
           defaultValue={phone}
           required
         />
