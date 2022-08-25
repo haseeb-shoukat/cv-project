@@ -57,6 +57,7 @@ export default class General extends React.Component {
         <input
           name="email"
           placeholder="madmax@yahoo.com"
+          pattern="\w+@\w+(.\w+)?$"
           id="email"
           type="email"
           defaultValue={email}
@@ -67,7 +68,7 @@ export default class General extends React.Component {
           name="phone"
           placeholder="021-34567891"
           id="phone"
-          type="phone"
+          type="tel"
           defaultValue={phone}
           required
         />
