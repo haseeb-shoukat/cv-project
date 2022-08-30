@@ -1,7 +1,13 @@
 import General from "./components/General";
+import Education from "./components/Education";
 
 function App() {
-  return <General />;
+  return (
+    <div>
+      <General />
+      <Education />
+    </div>
+  );
 }
 
 export default App;
