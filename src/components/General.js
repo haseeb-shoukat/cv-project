@@ -47,7 +47,7 @@ export default class General extends React.Component {
         <label htmlFor="last-name">Last Name:</label>
         <input
           name="lastName"
-          placeholder="Schlitz"
+          placeholder="Schultz"
           id="last-name"
           type="text"
           defaultValue={lastName}
