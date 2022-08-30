@@ -20,26 +20,25 @@ export default class Education extends React.Component {
   alterState = (e) => {
     e.preventDefault();
     const id = e.target.id;
-    const event = e.nativeEvent.submitter.value;
     const arr = [...this.state.education];
 
-    if (event === "Delete") {
-      this.setState({
-        education: arr.filter((item) => item.key !== id),
-      });
-    } else {
-      const { name, title, from, to } = Object.fromEntries(
-        new FormData(e.target)
-      );
-      arr.splice(
-        arr.findIndex((item) => item.key === id),
-        1,
-        { key: id, name, title, from, to, state: "display" }
-      );
-      this.setState({
-        education: arr,
-      });
-    }
+    const { name, title, from, to } = Object.fromEntries(
+      new FormData(e.target)
+    );
+    arr.splice(
+      arr.findIndex((item) => item.key === id),
+      1,
+      { key: id, name, title, from, to, state: "display" }
+    );
+    this.setState({
+      education: arr,
+    });
+  };
+
+  deleteTask = (id) => {
+    this.setState({
+      education: this.state.education.filter((item) => item.key !== id),
+    });
   };
 
   Experience = ({ id, name, title, from, to, state }) => {
@@ -75,7 +74,12 @@ export default class Education extends React.Component {
             <input name="to" type="date" defaultValue={to} required />
           </label>
           <input type="submit" name="send" value="Save" />
-          <input type="submit" name="send" value="Delete" />
+          <input
+            type="button"
+            name="send"
+            onClick={this.deleteTask.bind(null, id)}
+            value="Delete"
+          />
         </form>
       );
     }
@@ -118,7 +122,7 @@ export default class Education extends React.Component {
   render() {
     return (
       <div>
-        <div className="main-heading">Education</div>
+        <div className="main-heading">Education:</div>
         {this.state.education.map(({ key, name, title, from, to, state }) => (
           <this.Experience
             key={key}

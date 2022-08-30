@@ -21,26 +21,25 @@ export default class Work extends React.Component {
   alterState = (e) => {
     e.preventDefault();
     const id = e.target.id;
-    const event = e.nativeEvent.submitter.value;
     const arr = [...this.state.work];
 
-    if (event === "Delete") {
-      this.setState({
-        work: arr.filter((item) => item.key !== id),
-      });
-    } else {
-      const { name, title, from, to, tasks } = Object.fromEntries(
-        new FormData(e.target)
-      );
-      arr.splice(
-        arr.findIndex((item) => item.key === id),
-        1,
-        { key: id, name, title, from, to, tasks, state: "display" }
-      );
-      this.setState({
-        work: arr,
-      });
-    }
+    const { name, title, from, to, tasks } = Object.fromEntries(
+      new FormData(e.target)
+    );
+    arr.splice(
+      arr.findIndex((item) => item.key === id),
+      1,
+      { key: id, name, title, from, to, tasks, state: "display" }
+    );
+    this.setState({
+      work: arr,
+    });
+  };
+
+  deleteTask = (id) => {
+    this.setState({
+      work: this.state.work.filter((item) => item.key !== id),
+    });
   };
 
   Experience = ({ id, name, title, from, to, tasks, state }) => {
@@ -85,7 +84,12 @@ export default class Work extends React.Component {
             />
           </label>
           <input type="submit" name="send" value="Save" />
-          <input type="submit" name="send" value="Delete" />
+          <input
+            type="button"
+            onClick={this.deleteTask.bind(null, id)}
+            name="send"
+            value="Delete"
+          />
         </form>
       );
     }
