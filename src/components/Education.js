@@ -85,9 +85,20 @@ export default class Education extends React.Component {
         <div>Education: {title}</div>
         <div>From: {from}</div>
         <div>To: {to}</div>
-        <button>Edit</button>
+        <button onClick={this.editEducation.bind(null, id)}>Edit</button>
       </div>
     );
+  };
+
+  editEducation = (id) => {
+    let arr = [...this.state.education];
+    arr = arr.map((item) => {
+      if (item.key === id) {
+        item.state = "form";
+      }
+      return item;
+    });
+    this.setState({ education: arr });
   };
 
   addEducation = () => {
