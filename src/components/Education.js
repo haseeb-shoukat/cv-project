@@ -7,7 +7,7 @@ export default class Education extends React.Component {
     this.state = {
       education: [],
       current: {
-        id: uuidv4(),
+        key: uuidv4(),
         name: "",
         title: "",
         from: "",
@@ -18,7 +18,28 @@ export default class Education extends React.Component {
   }
 
   alterState = (e) => {
-    console.log(e.target);
+    e.preventDefault();
+    const id = e.target.id;
+    const event = e.nativeEvent.submitter.value;
+    const arr = [...this.state.education];
+
+    if (event === "Delete") {
+      this.setState({
+        education: arr.filter((item) => item.id !== id),
+      });
+    } else {
+      const { name, title, from, to } = Object.fromEntries(
+        new FormData(e.target)
+      );
+      arr.splice(
+        arr.findIndex((item) => item.key === id),
+        1,
+        { key: id, name, title, from, to, state: "display" }
+      );
+      this.setState({
+        education: arr,
+      });
+    }
   };
 
   Experience = ({ id, name, title, from, to, state }) => {
@@ -28,7 +49,7 @@ export default class Education extends React.Component {
           <label>
             Institution Name:
             <input
-              name="schoolName"
+              name="name"
               placeholder="Cedar College"
               type="text"
               defaultValue={name}
@@ -38,7 +59,7 @@ export default class Education extends React.Component {
           <label>
             Education:
             <input
-              name="education"
+              name="title"
               placeholder="A levels"
               type="text"
               defaultValue={title}
@@ -53,12 +74,8 @@ export default class Education extends React.Component {
             To:
             <input name="to" type="date" defaultValue={to} required />
           </label>
-          <button type="submit" name="send" value="save">
-            Save
-          </button>
-          <button type="submit" name="send" value="delete">
-            Delete
-          </button>
+          <input type="submit" name="send" value="Save" />
+          <input type="submit" name="send" value="Delete" />
         </form>
       );
     }
@@ -77,7 +94,7 @@ export default class Education extends React.Component {
     this.setState({
       education: [...this.state.education, this.state.current],
       current: {
-        id: uuidv4(),
+        key: uuidv4(),
         name: "",
         title: "",
         from: "",
@@ -88,20 +105,22 @@ export default class Education extends React.Component {
   };
 
   render() {
+    console.log(this.state);
     return (
       <div>
-        <div class="main-heading">Education</div>
-        {this.state.education.map(({ id, name, title, from, to, state }) => {
+        <div className="main-heading">Education</div>
+        {this.state.education.map(({ key, name, title, from, to, state }) => (
           <this.Experience
-            id={id}
+            key={key}
+            id={key}
             name={name}
             title={title}
             from={from}
             to={to}
             state={state}
-          />;
-        })}
-        <button onClick={addEducation}>Add</button>
+          />
+        ))}
+        <button onClick={this.addEducation}>Add</button>
       </div>
     );
   }
