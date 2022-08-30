@@ -25,7 +25,7 @@ export default class Education extends React.Component {
 
     if (event === "Delete") {
       this.setState({
-        education: arr.filter((item) => item.id !== id),
+        education: arr.filter((item) => item.key !== id),
       });
     } else {
       const { name, title, from, to } = Object.fromEntries(
@@ -116,7 +116,6 @@ export default class Education extends React.Component {
   };
 
   render() {
-    console.log(this.state);
     return (
       <div>
         <div className="main-heading">Education</div>
