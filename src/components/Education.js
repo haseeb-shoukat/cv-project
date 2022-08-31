@@ -73,9 +73,15 @@ export default class Education extends React.Component {
             To:
             <input name="to" type="date" defaultValue={to} required />
           </label>
-          <input type="submit" name="send" value="Save" />
+          <input
+            type="submit"
+            className="save-button"
+            name="send"
+            value="Save"
+          />
           <input
             type="button"
+            className="delete-button"
             name="send"
             onClick={this.deleteTask.bind(null, id)}
             value="Delete"
@@ -84,12 +90,25 @@ export default class Education extends React.Component {
       );
     }
     return (
-      <div>
-        <div>Institution Name: {name}</div>
-        <div>Education: {title}</div>
-        <div>From: {from}</div>
-        <div>To: {to}</div>
-        <button onClick={this.editEducation.bind(null, id)}>Edit</button>
+      <div className="section-package">
+        <div>
+          <span className="package-heading">Institution Name:</span> {name}
+        </div>
+        <div>
+          <span className="package-heading">Education:</span> {title}
+        </div>
+        <div>
+          <span className="package-heading">From:</span> {from}
+        </div>
+        <div>
+          <span className="package-heading">To:</span> {to}
+        </div>
+        <button
+          className="edit-btn"
+          onClick={this.editEducation.bind(null, id)}
+        >
+          Edit
+        </button>
       </div>
     );
   };
@@ -121,8 +140,8 @@ export default class Education extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className="main-heading">Education:</div>
+      <div className="main-section">
+        <div className="main-heading">Education</div>
         {this.state.education.map(({ key, name, title, from, to, state }) => (
           <this.Experience
             key={key}
@@ -134,7 +153,9 @@ export default class Education extends React.Component {
             state={state}
           />
         ))}
-        <button onClick={this.addEducation}>Add</button>
+        <button className="add-button" onClick={this.addEducation}>
+          Add
+        </button>
       </div>
     );
   }

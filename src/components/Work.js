@@ -74,19 +74,26 @@ export default class Work extends React.Component {
             To:
             <input name="to" type="date" defaultValue={to} required />
           </label>
-          <label>
+          <label className="text-box">
             Main Tasks:
             <textarea
               name="tasks"
               placeholder="Worked as Senior Developer on React Native Project"
               defaultValue={tasks}
+              rows="4"
               required
             />
           </label>
-          <input type="submit" name="send" value="Save" />
+          <input
+            type="submit"
+            className="save-button"
+            name="send"
+            value="Save"
+          />
           <input
             type="button"
             onClick={this.deleteTask.bind(null, id)}
+            className="delete-button"
             name="send"
             value="Delete"
           />
@@ -94,13 +101,25 @@ export default class Work extends React.Component {
       );
     }
     return (
-      <div>
-        <div>Company Name: {name}</div>
-        <div>Job Title: {title}</div>
-        <div>From: {from}</div>
-        <div>To: {to}</div>
-        <div>Main Tasks: {tasks}</div>
-        <button onClick={this.editWork.bind(null, id)}>Edit</button>
+      <div className="section-package">
+        <div>
+          <span className="package-heading">Company Name:</span> {name}
+        </div>
+        <div>
+          <span className="package-heading">Job Title:</span> {title}
+        </div>
+        <div>
+          <span className="package-heading">From:</span> {from}
+        </div>
+        <div>
+          <span className="package-heading">To:</span> {to}
+        </div>
+        <div>
+          <span className="package-heading">Main Tasks:</span> {tasks}
+        </div>
+        <button className="edit-btn" onClick={this.editWork.bind(null, id)}>
+          Edit
+        </button>
       </div>
     );
   };
@@ -133,8 +152,8 @@ export default class Work extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className="main-heading">Work Experience:</div>
+      <div className="main-section">
+        <div className="main-heading">Work Experience</div>
         {this.state.work.map(({ key, name, title, from, to, tasks, state }) => (
           <this.Experience
             key={key}
@@ -147,7 +166,9 @@ export default class Work extends React.Component {
             state={state}
           />
         ))}
-        <button onClick={this.addWork}>Add</button>
+        <button className="add-button" onClick={this.addWork}>
+          Add
+        </button>
       </div>
     );
   }

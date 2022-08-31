@@ -35,45 +35,48 @@ export default class General extends React.Component {
 
     return (
       <form onSubmit={this.switchToDisplay}>
-        <label htmlFor="first-name">First Name:</label>
-        <input
-          name="firstName"
-          placeholder="Andrew"
-          id="first-name"
-          type="text"
-          defaultValue={firstName}
-          required
-        />
-        <label htmlFor="last-name">Last Name:</label>
-        <input
-          name="lastName"
-          placeholder="Schultz"
-          id="last-name"
-          type="text"
-          defaultValue={lastName}
-          required
-        />
-        <label htmlFor="email">Email:</label>
-        <input
-          name="email"
-          placeholder="madmax@yahoo.com"
-          pattern="\w+@\w+(.\w+)?$"
-          id="email"
-          type="email"
-          defaultValue={email}
-          required
-        />
-        <label htmlFor="phone">Phone:</label>
-        <input
-          name="phone"
-          placeholder="021-34567891"
-          id="phone"
-          type="tel"
-          pattern="[+]{1}[0-9]{11,14}"
-          defaultValue={phone}
-          required
-        />
-        <input defaultValue="Save" type="submit" />
+        <label>
+          First Name:
+          <input
+            name="firstName"
+            placeholder="Andrew"
+            type="text"
+            defaultValue={firstName}
+            required
+          />
+        </label>
+        <label>
+          Last Name:
+          <input
+            name="lastName"
+            placeholder="Schultz"
+            type="text"
+            defaultValue={lastName}
+            required
+          />
+        </label>
+        <label>
+          Email:
+          <input
+            name="email"
+            placeholder="madmax@yahoo.com"
+            pattern="\w+@\w+(.\w+)?$"
+            type="email"
+            defaultValue={email}
+            required
+          />
+        </label>
+        <label>
+          Phone:
+          <input
+            name="phone"
+            placeholder="021-34567891"
+            type="tel"
+            defaultValue={phone}
+            required
+          />
+        </label>
+        <input className="general-submit" defaultValue="Save" type="submit" />
       </form>
     );
   };
@@ -82,18 +85,37 @@ export default class General extends React.Component {
     const { firstName, lastName, email, phone } = this.state;
 
     return (
-      <div>
-        <div>First Name: {firstName}</div>
-        <div>Last Name: {lastName}</div>
-        <div>Email: {email}</div>
-        <div>Phone: {phone}</div>
-        <button onClick={this.switchToForm}>Edit</button>
+      <div className="section-package">
+        <div>
+          <span className="package-heading">First Name:</span> {firstName}
+        </div>
+        <div>
+          <span className="package-heading">Last Name:</span> {lastName}
+        </div>
+        <div>
+          <span className="package-heading">Email:</span> {email}
+        </div>
+        <div>
+          <span className="package-heading">Phone:</span> {phone}
+        </div>
+        <button className="edit-btn" onClick={this.switchToForm}>
+          Edit
+        </button>
       </div>
     );
   };
 
   render() {
-    if (this.state.state === "form") return <this.GeneralForm />;
-    return <this.GeneralDisplay />;
+    let section;
+    this.state.state === "form"
+      ? (section = <this.GeneralForm />)
+      : (section = <this.GeneralDisplay />);
+
+    return (
+      <div className="main-section">
+        <div className="main-heading">General</div>
+        {section}
+      </div>
+    );
   }
 }

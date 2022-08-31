@@ -5,6 +5,7 @@ import Work from "./components/Work";
 function App() {
   return (
     <div className="main">
+      <div className="heading">CV Application</div>
       <General />
       <Education />
       <Work />
