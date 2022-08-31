@@ -34,7 +34,7 @@ code {
   padding-bottom: 10px;
   text-align: center;
   text-decoration: underline;
-  color: #0891b2;
+  color: #0e7490;
 }
 
 .main-section {
@@ -107,4 +107,29 @@ textarea {
 
 .save-button:hover {
   background-color: #16a34a;
+}
+
+.section-package {
+  text-align: left;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 10px 0px 10px;
+}
+
+.package-heading {
+  text-decoration: underline;
+  color: #0e7490;
+  padding-right: 7px;
+}
+
+.edit-btn {
+  width: min-content;
+}
+
+.heading {
+  font-size: 2rem;
+  text-decoration: underline;
+  color: #0369a1;
 }
