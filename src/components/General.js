@@ -1,40 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 
-export default class General extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      state: "form",
-    };
-  }
+const General = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [state, setState] = useState("form");
 
-  switchToForm = () => {
-    this.setState({ state: "form" });
-  };
+  const switchToForm = () => setState("form");
 
-  switchToDisplay = (e) => {
+  const switchToDisplay = (e) => {
     e.preventDefault();
     const { firstName, lastName, email, phone } = Object.fromEntries(
       new FormData(e.target)
     );
-    this.setState({
-      firstName,
-      lastName,
-      email,
-      phone,
-      state: "display",
-    });
+
+    setFirstName(firstName);
+    setLastName(lastName);
+    setEmail(email);
+    setPhone(phone);
+    setState("display");
   };
 
-  GeneralForm = () => {
-    const { firstName, lastName, email, phone } = this.state;
-
+  const GeneralForm = () => {
     return (
-      <form onSubmit={this.switchToDisplay}>
+      <form onSubmit={switchToDisplay}>
         <label>
           First Name:
           <input
@@ -81,9 +71,7 @@ export default class General extends React.Component {
     );
   };
 
-  GeneralDisplay = () => {
-    const { firstName, lastName, email, phone } = this.state;
-
+  const GeneralDisplay = () => {
     return (
       <div className="section-package">
         <div>
@@ -98,24 +86,19 @@ export default class General extends React.Component {
         <div>
           <span className="package-heading">Phone:</span> {phone}
         </div>
-        <button className="edit-btn" onClick={this.switchToForm}>
+        <button className="edit-btn" onClick={switchToForm}>
           Edit
         </button>
       </div>
     );
   };
 
-  render() {
-    let section;
-    this.state.state === "form"
-      ? (section = <this.GeneralForm />)
-      : (section = <this.GeneralDisplay />);
+  return (
+    <div className="main-section">
+      <div className="main-heading">General</div>
+      {state === "form" ? <GeneralForm /> : <GeneralDisplay />}
+    </div>
+  );
+};
 
-    return (
-      <div className="main-section">
-        <div className="main-heading">General</div>
-        {section}
-      </div>
-    );
-  }
-}
+export default General;
