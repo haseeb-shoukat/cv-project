@@ -1,27 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-export default class Work extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      work: [],
-      current: {
-        key: uuidv4(),
-        name: "",
-        title: "",
-        from: "",
-        to: "",
-        tasks: "",
-        state: "form",
-      },
-    };
-  }
+const Work = () => {
+  const [work, setWork] = useState([]);
+  const [current, setCurrent] = useState({
+    key: uuidv4(),
+    name: "",
+    title: "",
+    from: "",
+    to: "",
+    tasks: "",
+    state: "form",
+  });
 
-  alterState = (e) => {
+  const alterState = (e) => {
     e.preventDefault();
     const id = e.target.id;
-    const arr = [...this.state.work];
+    const arr = [...work];
 
     const { name, title, from, to, tasks } = Object.fromEntries(
       new FormData(e.target)
@@ -31,21 +26,15 @@ export default class Work extends React.Component {
       1,
       { key: id, name, title, from, to, tasks, state: "display" }
     );
-    this.setState({
-      work: arr,
-    });
+    setWork(arr);
   };
 
-  deleteTask = (id) => {
-    this.setState({
-      work: this.state.work.filter((item) => item.key !== id),
-    });
-  };
+  const deleteTask = (id) => setWork(work.filter((item) => item.key !== id));
 
-  Experience = ({ id, name, title, from, to, tasks, state }) => {
+  const Experience = ({ id, name, title, from, to, tasks, state }) => {
     if (state === "form") {
       return (
-        <form id={id} onSubmit={this.alterState}>
+        <form id={id} onSubmit={alterState}>
           <label>
             Company Name:
             <input
@@ -92,7 +81,7 @@ export default class Work extends React.Component {
           />
           <input
             type="button"
-            onClick={this.deleteTask.bind(null, id)}
+            onClick={deleteTask.bind(null, id)}
             className="delete-button"
             name="send"
             value="Delete"
@@ -117,59 +106,57 @@ export default class Work extends React.Component {
         <div>
           <span className="package-heading">Main Tasks:</span> {tasks}
         </div>
-        <button className="edit-btn" onClick={this.editWork.bind(null, id)}>
+        <button className="edit-btn" onClick={editWork.bind(null, id)}>
           Edit
         </button>
       </div>
     );
   };
 
-  editWork = (id) => {
-    let arr = [...this.state.work];
+  const editWork = (id) => {
+    let arr = [...work];
     arr = arr.map((item) => {
       if (item.key === id) {
         item.state = "form";
       }
       return item;
     });
-    this.setState({ work: arr });
+    setWork(arr);
   };
 
-  addWork = () => {
-    this.setState({
-      work: [...this.state.work, this.state.current],
-      current: {
-        key: uuidv4(),
-        name: "",
-        title: "",
-        from: "",
-        to: "",
-        tasks: "",
-        state: "form",
-      },
+  const addWork = () => {
+    setWork([...work, current]);
+    setCurrent({
+      key: uuidv4(),
+      name: "",
+      title: "",
+      from: "",
+      to: "",
+      tasks: "",
+      state: "form",
     });
   };
 
-  render() {
-    return (
-      <div className="main-section">
-        <div className="main-heading">Work Experience</div>
-        {this.state.work.map(({ key, name, title, from, to, tasks, state }) => (
-          <this.Experience
-            key={key}
-            id={key}
-            name={name}
-            title={title}
-            from={from}
-            to={to}
-            tasks={tasks}
-            state={state}
-          />
-        ))}
-        <button className="add-button" onClick={this.addWork}>
-          Add
-        </button>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="main-section">
+      <div className="main-heading">Work Experience</div>
+      {work.map(({ key, name, title, from, to, tasks, state }) => (
+        <Experience
+          key={key}
+          id={key}
+          name={name}
+          title={title}
+          from={from}
+          to={to}
+          tasks={tasks}
+          state={state}
+        />
+      ))}
+      <button className="add-button" onClick={addWork}>
+        Add
+      </button>
+    </div>
+  );
+};
+
+export default Work;
